@@ -3,7 +3,7 @@ import { Router } from 'express';
 const authRouter = Router();
 
 authRouter.get('/', (req, res) => {
-  res.json({ message: 'hello from /auth!' });
+  res.sendStatus(200);
 });
 
 export default authRouter;
