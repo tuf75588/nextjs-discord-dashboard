@@ -3,6 +3,7 @@ import { config } from './config';
 import router from './routes';
 import cors from 'cors';
 import session from 'express-session';
+import passport from 'passport';
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,9 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const { secret }: any = config;
 app.use(
