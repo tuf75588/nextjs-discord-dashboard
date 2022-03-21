@@ -1,11 +1,12 @@
 import express from 'express';
 import { config } from './config';
-import router from './routes';
+import authRouterWithDiscord from './routes';
 import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
-
+const { secret }: any = config;
 const app = express();
+require('./strategies/discord');
 app.use(express.json());
 app.use(
   cors({
@@ -13,11 +14,6 @@ app.use(
     credentials: true,
   })
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-const { secret }: any = config;
 app.use(
   session({
     secret,
@@ -29,12 +25,16 @@ app.use(
   })
 );
 
+// Enable Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 let port: any = config.PORT;
 
 async function main() {
   try {
     // run the app
-    app.use('/api', router);
+    app.use('/api', authRouterWithDiscord);
     const server: any = app.listen(port, () => {
       console.log('server listening http://localhost:' + server.address().port);
     });
