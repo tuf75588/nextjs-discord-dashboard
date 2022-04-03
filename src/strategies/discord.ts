@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy, Profile } from 'passport-discord';
-
+import { VerifyCallback } from 'passport-oauth2';
 passport.use(
   new Strategy(
     {
